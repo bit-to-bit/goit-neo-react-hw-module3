@@ -1,0 +1,22 @@
+.feedback table {
+    text-align: left;
+    border-collapse: collapse;
+    min-width: 300px;
+}
+
+.feedback td,
+.feedback th {
+    padding: 8px 0px;
+}
+
+.feedback td::first-letter {
+    text-transform: uppercase;
+}
+
+.feedback td:first-child {
+    min-width: 100px;
+}
+
+.total {
+    border-top: 2px solid black;
+}
