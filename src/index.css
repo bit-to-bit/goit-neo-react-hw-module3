@@ -32,6 +32,12 @@ img {
 
 .container {
   padding: 16px;
-  margin-top: 2px;
-  background-color: rgb(131, 181, 183);
+}
+
+input:focus {
+  outline: none;
+}
+
+button:hover {
+  cursor: pointer;
 }

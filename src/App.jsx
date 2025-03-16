@@ -1,50 +1,49 @@
-import Description from './components/description/Description';
-import Feedback from './components/feedback/Feedback';
-import Options from './components/options/Options';
 import { useState, useEffect } from 'react';
-import { feedbackInitialState, allOptions } from './constants';
+import ContactList from './components/contactList/ContactList';
+import ContactForm from './components/contactForm/ContactForm';
+import { nanoid } from 'nanoid';
+import SearchBox from './components/searchBox/SearchBox';
+import { contactsInitialState } from './constants';
 
 const App = () => {
-  const getFeedbackInitialState = () => {
-    const localData = localStorage.getItem('feedback');
+  const getContactInitialState = () => {
+    const localData = localStorage.getItem('contacts');
     if (localData) {
       return JSON.parse(localData);
     }
-    return feedbackInitialState;
+    return contactsInitialState;
   };
 
-  const [feedback, setFeedback] = useState(getFeedbackInitialState);
+  const [contacts, setContacts] = useState(getContactInitialState);
+
+  const [filter, setFilter] = useState('');
+
+  console.log(contacts);
 
   useEffect(() => {
-    localStorage.setItem('feedback', JSON.stringify(feedback));
-  }, [feedback]);
+    localStorage.setItem('contacts', JSON.stringify(contacts));
+  }, [contacts]);
 
-  const handleClickFeedbackBtn = optionName => {
-    setFeedback({
-      ...feedback,
-      [optionName]: feedback[optionName] + 1,
-    });
+  const deleteContact = contactId => {
+    setContacts(contacts.filter(contact => contact.id !== contactId));
   };
 
-  const handleClickResetBtn = () => {
-    setFeedback(feedbackInitialState);
+  const saveContact = contact => {
+    setContacts(contacts => [...contacts, { ...contact, id: nanoid() }]);
   };
 
-  const totalFeedbacks = allOptions.reduce(
-    (acc, option) => acc + feedback[option],
-    0
+  const filteredContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
   );
+
   return (
     <>
-      <Description />
-
-      <Options
-        handleClickFeedbackBtn={handleClickFeedbackBtn}
-        handleClickResetBtn={handleClickResetBtn}
-        totalFeedbacks={totalFeedbacks}
-      />
-
-      <Feedback feedback={feedback} totalFeedbacks={totalFeedbacks} />
+      <div className='container'>
+        <h1>Phonebook</h1>
+      </div>
+      <ContactForm save={saveContact} />
+      <SearchBox onChange={setFilter} inputValue={filter} />
+      <ContactList contacts={filteredContacts} onDelete={deleteContact} />
     </>
   );
 };
