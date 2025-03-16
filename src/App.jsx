@@ -18,8 +18,6 @@ const App = () => {
 
   const [filter, setFilter] = useState('');
 
-  console.log(contacts);
-
   useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
