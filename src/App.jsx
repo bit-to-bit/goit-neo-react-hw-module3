@@ -3,17 +3,9 @@ import ContactList from './components/contactList/ContactList';
 import ContactForm from './components/contactForm/ContactForm';
 import { nanoid } from 'nanoid';
 import SearchBox from './components/searchBox/SearchBox';
-import { contactsInitialState } from './constants';
+import getContactInitialState from './utils';
 
 const App = () => {
-  const getContactInitialState = () => {
-    const localData = localStorage.getItem('contacts');
-    if (localData) {
-      return JSON.parse(localData);
-    }
-    return contactsInitialState;
-  };
-
   const [contacts, setContacts] = useState(getContactInitialState);
 
   const [filter, setFilter] = useState('');
