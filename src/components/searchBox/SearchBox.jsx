@@ -1,4 +1,4 @@
-import css from './searchBox.module.css';
+import css from './SearchBox.module.css';
 import clsx from 'clsx';
 const searchBox = ({ onChange, inputValue }) => {
   return (
